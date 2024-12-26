@@ -1,0 +1,87 @@
+{
+  "name": "eval_image_quality_by_pytorch_fid",
+  "description": "PyTorchベースの画像生成モデル（対応可能なモデルはreferencesを参照）の品質を評価するため、Fréchet Inception Distance (FID)を計算することで、生成された画像の品質を数値化し、実際の画像データセットとの類似性を評価する",
+  "source_repository": "https://github.com/aistairc/Qunomon_AIT_eval_image_quality_by_pytorch_fid",
+  "version": "1.0",
+  "quality": "https://ait-hub.pj.aist.go.jp/ait-hub/api/0.0.1/qualityDimensions/機械学習品質マネジメントガイドライン第三版/C-1機械学習モデルの正確性",
+  "keywords": [
+    "pytorch-fid",
+    "image change"
+  ],
+  "references": [
+    {
+      "bib_info": "MMGeneration is a powerful toolkit for generative models, especially for GANs now. It is based on PyTorch and MMCV. The master branch works with PyTorch 1.5+.",
+      "url": "https://github.com/open-mmlab/mmgeneration/blob/master/configs/cyclegan/README.md"
+    },
+    {
+      "bib_info": "MMGeneration is a powerful toolkit for generative models, especially for GANs now. It is based on PyTorch and MMCV. The master branch works with PyTorch 1.5+.",
+      "url": "https://github.com/open-mmlab/mmgeneration/blob/master/configs/pix2pix/README.md"
+    },
+    {
+      "bib_info": "GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium",
+      "url": "https://arxiv.org/abs/1706.08500"
+    }
+  ],
+  "licenses": [
+    "Apache License Version 2.0"
+  ],
+  "inventories": [
+    {
+      "name": "benchmark_image_dir",
+      "type": "dataset",
+      "description": "入力対象データセットのディレクトリ (すべて画像ファイルを一つフォルダに配置してください) ※イメージファイル形式については、JPEG/JPG、PNG、GIF、BMP、TIFFの画像形式をサポートしています。",
+      "requirement": {
+        "format": [
+          "DIR"
+        ]
+      }
+    },
+    {
+      "name": "pytorch_model",
+      "type": "model",
+      "description": "pytorchでトレーニング済みGANs画像生成モデルのみサポートされている。\n (モデルのアーキテクチャをつけて保存が必要 例:torch.save(model, モデル名称))",
+      "requirement": {
+        "format": [
+          "pt",
+          "pth"
+        ]
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "name": "target_domain",
+      "type": "str",
+      "description": "モデルで画像生成する時、渡すパラメータ（モデルによって、値が変わります。詳細はreferencesを参照）",
+      "default_val": "winter"
+    }
+  ],
+  "report": {
+    "measures": [
+      {
+        "name": "FID_Score",
+        "type": "float",
+        "description": "計算されたFIDスコア \n ※モデルの品質評価の観点からの基準:\n FID ≈ 0: 理想的なモデルの状態。生成画像が実際の画像とほぼ見分けがつかないレベル。\n FID < 10: 非常に高品質なモデル。生成画像が実際の画像と非常に近い。\n FID < 30: 実用的な品質のモデル。生成画像は実際の画像と多少異なるが、十分な品質を持つ。\n FID > 100: モデルの品質が低く、生成画像が実際の画像と大きく異なる。改善が必要。",
+        "structure": "single",
+        "min": "0"
+      }
+    ],
+    "resources": [
+      {
+        "name": "generated_images_resources",
+        "type": "picture",
+        "description": "生成された画像のサンプル ※３枚まで表示"
+      }
+    ]
+  },
+  "downloads": [
+    {
+      "name": "generated_images",
+      "description": "生成された画像のZIPファイル"
+    },
+    {
+      "name": "Log",
+      "description": "AIT実行ログ"
+    }
+  ]
+}
