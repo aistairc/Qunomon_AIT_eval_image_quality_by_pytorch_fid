@@ -354,7 +354,7 @@ Apache License 2.0
 
 attrs
 24.3.0
-UNKNOWN
+MIT License
 The MIT License (MIT)
 
 Copyright (c) 2015 Hynek Schlawack and the attrs contributors
